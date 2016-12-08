@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_dowload"
+    android:layout_width="match_parent"
+    android:layout_height="75sp"
+    android:layout_marginBottom="10sp" >
+    <ImageButton
+        android:layout_marginLeft="15sp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:background="@mipmap/logo3"/>
+    <LinearLayout
+        android:layout_marginLeft="30sp"
+        android:layout_alignParentRight="true"
+        android:paddingRight="20sp"
+        android:paddingLeft="20sp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="18sp"
+            android:text="TextView"
+            android:padding="4sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvFileName" />
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:progressDrawable="@drawable/my_progressbar_blue"
+            android:id="@+id/tvProgress"
+            android:max="100"
+            android:layout_marginRight="50sp"
+            android:layout_width="match_parent"
+            android:layout_height="8sp" />
+        <LinearLayout
+            android:layout_marginTop="5sp"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/btStart"
+                android:layout_width="60sp"
+                android:layout_height="35sp"
+                android:textSize="13sp"
+                android:background="#5ABC67"
+                android:text="下载"/>
+            <Button
+                android:layout_marginLeft="20sp"
+                android:id="@+id/btStop"
+                android:layout_width="60sp"
+                android:layout_height="35sp"
+                android:textSize="13sp"
+                android:background="#FFED9D"
+                android:text="暂停"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

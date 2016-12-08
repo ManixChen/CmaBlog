@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_tabs"
+    android:layout_width="match_parent"
+    android:paddingLeft="15sp"
+    android:paddingRight="15sp"
+    android:layout_height="32dp"
+    android:background="@color/colorBgGreen"
+    android:orientation="horizontal" >
+    <TextView
+        android:id="@+id/tv_tab1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="精品"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_tab2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="热门应用"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_tab3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="所有"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/tv_tab4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="分类"
+        android:textSize="14sp" />
+    <!--<TextView-->
+        <!--android:id="@+id/tv_tab5"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="#fff"-->
+        <!--android:text="管理"-->
+        <!--android:textSize="14sp" />-->
+    <!--<TextView-->
+        <!--android:id="@+id/tv_tab6"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="#fff"-->
+        <!--android:text="下载"-->
+        <!--android:textSize="14sp" />-->
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_tabs_bottom"
+    android:layout_width="match_parent"
+    android:paddingLeft="15sp"
+    android:paddingRight="15sp"
+    android:layout_height="32dp"
+    android:background="@color/colorBgGreen"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tv_tab1_bottom"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="下载"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_tab2_bottom"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="已安装"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/tv_tab3_bottom"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:text="管理"
+        android:textSize="14sp" />
+</LinearLayout>
