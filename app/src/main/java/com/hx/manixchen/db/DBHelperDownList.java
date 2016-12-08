@@ -1,7 +1,6 @@
 package com.hx.manixchen.db;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -11,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelperDownList extends SQLiteOpenHelper{
     private static final String DB_NAME = "download.db";
-    private static final int VERSION = 3;
+    private static final int VERSION = 4;
     private static final String SQL_CREATE_DOWNLOAD_LIST = "create table if not exists download_app(_id integer primary key autoincrement," +
             "app_name text,version text,app_size text,app_icon text,download_address text,download_times integer)";
     private static final String SQL_DROP_DOWNLOAD_LIST = "drop table if exists download_app";

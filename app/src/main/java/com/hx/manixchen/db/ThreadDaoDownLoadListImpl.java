@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.hx.manixchen.views.ThreadInfo;
 import com.hx.manixchen.views.ThreadInfoDownloadList;
 
 import java.util.ArrayList;
@@ -48,9 +47,9 @@ public class ThreadDaoDownLoadListImpl implements ThreadDaoDownloadList{
 
     @Override
     public void deleteApp(String app_name) {
+        System.out.println("download_app数据删除成功");
         SQLiteDatabase database=mDBHelperList.getWritableDatabase();
-        database.execSQL(
-                "delete from download_app where app_name=?",
+        database.execSQL("delete from download_app where app_name=?",
                 new Object[]{app_name});
         database.close();
     }

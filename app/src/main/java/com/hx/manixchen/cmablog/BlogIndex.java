@@ -62,7 +62,7 @@ public class BlogIndex extends AppCompatActivity
     private PagerAdapter mAdapter;
     private Context blogIndexContent;
     private List<NewsBean> newsBeanList;
-    public String URL = "http://192.168.50.16:8080/Servers/servlet/Servers";
+    public String URL = "http://192.168.0.105:8080/Servers/servlet/Servers";
     private BlogIndex blogIndex;
 
     @Override
@@ -336,7 +336,7 @@ public class BlogIndex extends AppCompatActivity
 
     /**Tab1获取数据*/
     public List<NewsBean> getAllAppList(String doAction) {
-        String path = "http://192.168.50.16:8080/Servers/servlet/Servers";
+        String path = "http://192.168.0.105:8080/Servers/servlet/Servers";
         try {
             System.out.println("path--：" + path);
             URL url = new URL(path);

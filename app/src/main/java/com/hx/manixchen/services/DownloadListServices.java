@@ -3,7 +3,6 @@ package com.hx.manixchen.services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -11,7 +10,6 @@ import android.support.annotation.Nullable;
 
 import com.hx.manixchen.db.ThreadDaoDownLoadListImpl;
 import com.hx.manixchen.db.ThreadDaoDownloadList;
-import com.hx.manixchen.views.Dowload;
 import com.hx.manixchen.views.ThreadInfoDownloadList;
 
 import org.json.JSONArray;
@@ -42,8 +40,8 @@ public class DownloadListServices extends Service implements Serializable{
         }else if(DowloadServices.ACTION_DELETEALLAPP.equals(intent.getAction())){
             new DeleteAllDownApp().start();
         }else if(DowloadServices.ACTION_DELETAPP.equals(intent.getAction())){
-            Bundle extras = intent.getExtras();
-            deleteAppNam=extras.getString("app_name");
+//            Bundle extras = intent.getExtras();
+//            deleteAppNam=extras.getString("app_name");
             System.out.println("49.11>:删除已下载应用"+deleteAppNam);
             new DeleteCurrentApp().start();
         }
@@ -79,9 +77,10 @@ public class DownloadListServices extends Service implements Serializable{
                     deleteAllDownAppInfo.deleteAllDownApp();
                     break;
                 case DowloadServices.MSG_DELETECURRENT:
-                    DeleteCApp deleteCApp = new DeleteCApp(DownloadListServices.this);
-                    System.out.println("当前删除的应用程序"+deleteAppNam);
-                    deleteCApp.deleteCurrentApp(deleteAppNam);
+                    System.out.println("60.10当前删除的应用程序"+deleteAppNam);
+                    DeleteCAppInfo deleteCAppInfo = new DeleteCAppInfo(DownloadListServices.this);
+                    System.out.println("60.11当前删除的应用程序::>:"+"苗阅");
+                    deleteCAppInfo.deleteCurrentApp("苗阅");
                     break;
             }
         }
@@ -178,10 +177,10 @@ public class DownloadListServices extends Service implements Serializable{
         }
     }
 
-    class  DeleteCApp{
+    class  DeleteCAppInfo{
         private Context mContent = null;
         private ThreadDaoDownloadList mDao;
-        public DeleteCApp(Context mContent) {
+        public DeleteCAppInfo(Context mContent) {
             this.mContent = mContent;
             mDao = (ThreadDaoDownloadList) new ThreadDaoDownLoadListImpl(mContent);
         }
@@ -198,7 +197,7 @@ public class DownloadListServices extends Service implements Serializable{
         @Override
         public void run() {
             super.run();
-            mHandler.obtainMessage(DowloadServices.MSG_DELETECURRENT).sendToTarget();
+            mHandler.obtainMessage(DowloadServices.MSG_DELETE).sendToTarget();
         }
     }
     class  DeleteAllDownAppInfo {

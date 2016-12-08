@@ -23,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Dowload extends AppCompatActivity implements View.OnClickListener {
@@ -99,10 +98,10 @@ public class Dowload extends AppCompatActivity implements View.OnClickListener {
                 Bundle bundle = new Bundle();
                 Intent intentDelete = new Intent(Dowload.this, DownloadListServices.class);
                 intent.setAction(DowloadServices.ACTION_DELETAPP);
-                bundle.putString("app_name", delAppName);
-                System.out.println("49.10>:删除已下载应用");
-                intentDelete.putExtras(bundle);
-                startService(intentDelete);
+//                bundle.putString("app_name", delAppName);
+               // System.out.println("49.10>:删除已下载应用"+delAppName);
+//                intentDelete.putExtras(bundle);
+                //startService(intentDelete);
 
                 Toast.makeText(Dowload.this,
                         delAppName + "已下载完毕", Toast.LENGTH_SHORT).show();
