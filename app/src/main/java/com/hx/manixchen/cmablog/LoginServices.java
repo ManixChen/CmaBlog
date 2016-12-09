@@ -11,7 +11,7 @@ public class LoginServices {
     public static String loginByGet(String username, String password, String loginway) {
         //服务器请求
         //String path="http://192.168.50.16:8080/Servers/servlet/Servers?username="+username+"&password="+password;
-        String path = "http://192.168.0.105:8080/Servers/servlet/Servers";
+        String path = "http://192.168.50.16:8080/Servers/servlet/Servers";
         try {
             System.out.println("path--：" + path);
             URL url = new URL(path);

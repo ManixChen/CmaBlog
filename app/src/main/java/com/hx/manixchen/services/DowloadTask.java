@@ -94,14 +94,7 @@ public class DowloadTask {
             Intent intent = new Intent(DowloadServices.ACTION_FINISHED);
             intent.putExtra("fileInfo", mFileInfo);//可在下载中数据库中删除该(在Dowload中实现)
             mContent.sendBroadcast(intent);
-
-            Intent intentDelete = new Intent(mContent, DownloadListServices.class);
-            intent.setAction(DowloadServices.ACTION_DELETAPP);
-//                bundle.putString("app_name", delAppName);
-            System.out.println("60.10>:删除已下载应用");
-//                intentDelete.putExtras(bundle);
-           // mContent.startService(intentDelete);
-            new DownloadListServices().mHandler.obtainMessage(DowloadServices.MSG_DELETECURRENT).sendToTarget();
+            System.out.println("66:getFileName::"+mFileInfo.getFileName());
         }
     }
 

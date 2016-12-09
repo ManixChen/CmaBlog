@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hx.manixchen.cmablog.R;
+import com.hx.manixchen.db.ThreadDaoDownLoadListImpl;
+import com.hx.manixchen.db.ThreadDaoDownloadList;
 import com.hx.manixchen.services.DowloadServices;
 import com.hx.manixchen.services.DownloadListServices;
 
@@ -22,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +36,7 @@ public class Dowload extends AppCompatActivity implements View.OnClickListener {
     private List<FileInfo> mFileList = null;
     private FileListAdapter mAdapter = null;
     private TextView app_title;
-    private ImageButton search_btn;
+    private TextView search_btn;
     private TextView downloadAll;
     private JSONObject backJsonObj;
     private String delAppName;
@@ -49,7 +53,8 @@ public class Dowload extends AppCompatActivity implements View.OnClickListener {
         mLvFile = (ListView) findViewById(R.id.lvfile);//ListView容器
         app_title = (TextView) findViewById(R.id.app_title);
         app_title.setText("高速下载器");
-        search_btn = (ImageButton) findViewById(R.id.search_btn);
+        search_btn = (TextView) findViewById(R.id.search_btn);
+        search_btn.setOnClickListener(this);
         downloadAll = (TextView) findViewById(R.id.downloadAllApp);
         downloadAll.setOnClickListener(this);
 
@@ -90,24 +95,74 @@ public class Dowload extends AppCompatActivity implements View.OnClickListener {
                 int id = intent.getIntExtra("id", 0);
                 mAdapter.updateProgress(id, finished);
 
-            } else if (DowloadServices.ACTION_FINISHED.equals(intent.getAction())) {//更新进度
+            } else if (DowloadServices.ACTION_FINISHED.equals(intent.getAction())) {//下载任务完成
                 FileInfo fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
                 mAdapter.updateProgress(fileInfo.getId(), 0);
                 delAppName= mFileList.get(fileInfo.getId()).getFileName();
-                //删除当前下载任务
-                Bundle bundle = new Bundle();
-                Intent intentDelete = new Intent(Dowload.this, DownloadListServices.class);
-                intent.setAction(DowloadServices.ACTION_DELETAPP);
-//                bundle.putString("app_name", delAppName);
-               // System.out.println("49.10>:删除已下载应用"+delAppName);
-//                intentDelete.putExtras(bundle);
-                //startService(intentDelete);
-
+                /**
+                 * 删除已下载任务
+                 */
+                DeleteCAppInfo deleteCAppInfo = new DeleteCAppInfo(Dowload.this);
+                deleteCAppInfo.deleteCurrentApp(delAppName);
                 Toast.makeText(Dowload.this,
                         delAppName + "已下载完毕", Toast.LENGTH_SHORT).show();
+                System.out.println(DowloadServices.DOWNLOAD_PATH);
+                //dellAllApp();
+                boolean refreshDownloadPage = installDownloadApp(delAppName);
+                if(refreshDownloadPage){
+                    //onPostResume();
+                }
             }
         }
     };
+
+//    finish();
+//    startActivity(new Intent(Dowload.this,Dowload.class));
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        System.out.println("onRestoreInstanceState:::><:");
+    }
+
+    //安装程序
+    private boolean installDownloadApp(String app_name) {
+        File file = new File(DowloadServices.DOWNLOAD_PATH);
+        File[] files = file.listFiles();
+        for (int i=0;i<files.length;i++){
+            System.out.println(files[i].getName());
+        }
+        File file1 = new File(DowloadServices.DOWNLOAD_PATH + app_name);
+        if(file1.exists()){
+            System.out.println("App::"+DowloadServices.DOWNLOAD_PATH+app_name);
+            Intent intentInstall = new Intent(Intent.ACTION_VIEW);
+            intentInstall.setDataAndType(Uri.fromFile(file1), "application/vnd.android.package-archive");
+            // /storage/sdcard/downloads1/jiduobiaoqing_100103000.apk
+            intentInstall.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             startActivity(intentInstall);//安装应用程序
+        }
+        return true;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        System.out.println("onRestart：：：》《《：：：");
+        finish();
+        startActivity(new Intent(Dowload.this,Dowload.class));
+    }
+
+    //删除所有程序
+    private void dellAllApp() {
+        System.out.println("删除所有文件");
+        File file = new File(DowloadServices.DOWNLOAD_PATH);
+        File[] files = file.listFiles();
+        for (int i=0;i<files.length;i++){
+            System.out.println(files[i].getName());
+            files[i].delete();
+        }
+    }
+
     //获取所有下载中应用接收器
     BroadcastReceiver getAllApp = new BroadcastReceiver() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -153,6 +208,22 @@ public class Dowload extends AppCompatActivity implements View.OnClickListener {
         }
     };
 
+    /**
+     * 删除已下载完成应用
+     */
+    class  DeleteCAppInfo{
+        private Context mContent = null;
+        private ThreadDaoDownloadList mDao;
+        public DeleteCAppInfo(Context mContent) {
+            this.mContent = mContent;
+            mDao = (ThreadDaoDownloadList) new ThreadDaoDownLoadListImpl(mContent);
+        }
+        public void deleteCurrentApp(String appName){
+            System.out.println("当前删除的应用程序：：："+appName);
+            mDao.deleteApp(appName);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -164,6 +235,12 @@ public class Dowload extends AppCompatActivity implements View.OnClickListener {
                 intent.setAction(DowloadServices.ACTION_DELETEALLAPP);
                 System.out.println("30.1>:获取所有下载中应用");
                 startService(intent);
+                break;
+            case R.id.search_btn:
+                //System.out.println("60.1>:获取所有文件");
+                //installDownloadApp("app_name");
+                System.out.println("60.1>:删除所有文件");
+                installDownloadApp("jiduobiaoqing_100103000.apk");
                 break;
         }
     }
